@@ -12,12 +12,15 @@ namespace Asteroids
         [SerializeField] private float _force;
         private Camera _camera;
         private Ship _ship;
+        private BulletsPool _bulletPool;
+
         private void Start()
         {
             _camera = Camera.main;
             var moveTransform = new AccelerationMovePhysics(GetComponent<Rigidbody2D>(), _speed, _acceleration);
             var rotation = new RotationShip(transform);
             _ship = new Ship(moveTransform, rotation);
+            _bulletPool = new BulletsPool(_bullet.gameObject);
         }
 
 
@@ -40,8 +43,8 @@ namespace Asteroids
 
             if (Input.GetButtonDown("Fire1"))
             {
-                var temAmmunition = Instantiate(_bullet, _barrel.position, _barrel.rotation);
-                temAmmunition.AddForce(_barrel.up * _force);
+                var temAmmunition = _bulletPool.Get(_barrel.position, _barrel.rotation);
+                temAmmunition.GetComponent<Rigidbody2D>().AddForce(_barrel.up * _force);
             }
         }
 
