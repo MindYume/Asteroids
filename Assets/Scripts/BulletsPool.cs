@@ -13,7 +13,7 @@ public class BulletsPool
 
     public GameObject Get(Vector3 position, Quaternion rotation)
     {
-        GameObject result = (_pool.Count == 0) ? GameObject.Instantiate(_prefab, position, rotation) : _pool.Pop();
+        GameObject result = (_pool.Count == 0) ? PrefabBuilder.Instantiate(_prefab, position, rotation) : _pool.Pop();
 
         return result;
     }
